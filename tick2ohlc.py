@@ -13,6 +13,8 @@ _UNITS = [
     ["1D"],
     ["3D", "1W", "1M"],
 ]
+_DATE_FORMAT = "%m/%d/%Y"
+_TIME_FORMAT = "%H:%M"
 
 
 def resample(df: pd.DataFrame, unit: str) -> pd.DataFrame:
@@ -33,8 +35,8 @@ def resample(df: pd.DataFrame, unit: str) -> pd.DataFrame:
         # Collapse multindex and make it flat
         new_df.columns = new_df.columns.get_level_values(1)
     # Convert index into separate date/time columns
-    new_df["date"] = new_df.index.strftime("%m/%d/%Y")
-    new_df["time"] = new_df.index.strftime("%H:%M")
+    new_df["date"] = new_df.index.strftime(_DATE_FORMAT)
+    new_df["time"] = new_df.index.strftime(_TIME_FORMAT)
     # Make DT index a regular column
     return new_df
 
