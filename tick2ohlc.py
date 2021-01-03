@@ -42,7 +42,7 @@ def resample(df: pd.DataFrame, unit: str) -> pd.DataFrame:
 def write_data(filename: str, df: pd.DataFrame, unit: str):
     new_df = df.reset_index()
     new_df.to_csv(
-        f"{filename}_{unit}.csv".lower(),
+        f"{filename}_{unit.lower()}.csv",
         index=False,
         columns=["date", "time", "open", "high", "low", "close", "volume"],
     )
@@ -66,13 +66,13 @@ if __name__ == "__main__":
 
     filename = sys.argv[1]
     # Start by reading tick data
-    print("Reading tick data...", end="")
+    print("Reading tick data...", end="", flush=True)
     df = read_data(filename + ".csv")
     print("done")
 
     for units in _UNITS:
         for unit in units:
-            print(f"Resampling and writing CSV for: {unit}...", end="")
+            print(f"Resampling and writing CSV for: {unit}...", end="", flush=True)
             new_df = resample(df, unit)
             write_data(filename, new_df, unit)
             print("done")
